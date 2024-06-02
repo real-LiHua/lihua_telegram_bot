@@ -1,1 +1,4 @@
-python-telegram-bot
+faker
+pylint
+python-telegram-bot[job-queue]
+python-telegram-bot[rate-limiter]
