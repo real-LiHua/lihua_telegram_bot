@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "telegram-bot"
+name = "lihua-telegram-bot"
 version = "0.1.0"
 description = ""
 authors = ["Li Hua <lihua@email.com>"]
@@ -9,12 +9,16 @@ readme = "README.md"
 python = "^3.12"
 python-telegram-bot = "^21.2"
 
+[tool.poetry.group.dev.dependencies]
+pylint = "^3.2.2"
+pytest = "^8.2.1"
+
 [tool.isort]
-profile = "hug"
-src_paths = ["telegram_bot", "tests"]
+#profile = "hug"
+src_paths = ["lihua_telegram_bot", "tests"]
 
 [tool.pylint.main]
-ignore = [".git", "bin", "docs", "include", "lib", "lib64"]
+#ignore = [".git", "bin", "docs", "include", "lib", "lib64"]
 jobs = 0
 py-version = "3.12"
 recursive = true
@@ -32,6 +36,11 @@ ignore-long-lines = "^\\s*(# )?<?https?://\\S+>?$"
 
 [tool.pylint.logging]
 logging-format-style = "new"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
 
 [build-system]
 requires = ["poetry-core"]
