@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "telegram-bot"
+version = "0.1.0"
+description = ""
+authors = ["Li Hua <lihua@email.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-telegram-bot = "^21.2"
+
+[tool.isort]
+profile = "hug"
+src_paths = ["telegram_bot", "tests"]
+
+[tool.pylint.main]
+ignore = [".git", "bin", "docs", "include", "lib", "lib64"]
+jobs = 0
+py-version = "3.12"
+recursive = true
+suggestion-mode = true
+
+[tool.pylint.basic]
+good-names = ["i", "j", "k", "ex", "Run", "_"]
+
+[tool.pylint.classes]
+check-protected-access-in-special-methods = true
+
+[tool.pylint.format]
+expected-line-ending-format = "LF"
+ignore-long-lines = "^\\s*(# )?<?https?://\\S+>?$"
+
+[tool.pylint.logging]
+logging-format-style = "new"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
