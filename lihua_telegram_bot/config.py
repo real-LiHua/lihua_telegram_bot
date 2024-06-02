@@ -1,3 +1,3 @@
-import os
+import os as __os
 
-TOKEN = os.environ.get("lihua_telegram_bot")
+TOKEN = __os.environ.get("lihua_telegram_bot")
