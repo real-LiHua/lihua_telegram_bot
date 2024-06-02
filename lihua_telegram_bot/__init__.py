@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from telegram import ForceReply, Update
-from telegram.ext import (Application, CommandHandler, ContextTypes,
-                          MessageHandler)
+from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler
 from telegram.ext.filters import COMMAND, TEXT
 
 from lihua_telegram_bot import config
@@ -10,7 +9,7 @@ from lihua_telegram_bot.log import log
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    # pylint: disable=E0602,W0613
+    # pylint: disable=W0613
     user = update.effective_user
     await update.message.reply_html(
         _("Hi {}!").format(user.mention_html()),
