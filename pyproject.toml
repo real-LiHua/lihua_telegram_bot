@@ -18,7 +18,6 @@ pytest = "^8.2.1"
 src_paths = ["lihua_telegram_bot", "tests"]
 
 [tool.pylint.main]
-#ignore = [".git", "bin", "docs", "include", "lib", "lib64"]
 jobs = 0
 py-version = "3.12"
 recursive = true
@@ -34,13 +33,16 @@ check-protected-access-in-special-methods = true
 expected-line-ending-format = "LF"
 ignore-long-lines = "^\\s*(# )?<?https?://\\S+>?$"
 
-[tool.pylint.logging]
-logging-format-style = "new"
-
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "-ra -q"
 testpaths = ["tests"]
+
+[tool.pylint.logging]
+logging-format-style = "new"
+
+[tool.pylint."messages control"]
+disable = ["missing-module-docstring", "missing-function-docstring"]
 
 [build-system]
 requires = ["poetry-core"]
