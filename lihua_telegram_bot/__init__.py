@@ -44,7 +44,7 @@ def main() -> None:
     )
     application.add_handler(CommandHandler("start", start))
     application.run_webhook(
-        listen="::",
+        listen="0.0.0.0",
         port=8443,
         secret_token=token_urlsafe(128),
         webhook_url=f"https://{config.IP}:8443",
