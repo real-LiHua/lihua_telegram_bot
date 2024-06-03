@@ -6,8 +6,9 @@ authors = ["Li Hua <lihua@email.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-python-telegram-bot = {extras = ["job-queue", "rate-limiter"], version = "^21.2"}
+python = ">3.8"
+python-telegram-bot = {extras = ["job-queue", "rate-limiter", "webhooks"], version = "^21.2"}
+cryptography = "^42.0.7"
 
 [tool.isort]
 #profile = "hug"

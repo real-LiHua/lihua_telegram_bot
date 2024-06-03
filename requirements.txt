@@ -1,3 +1,5 @@
+cryptography
 pylint
 python-telegram-bot[job-queue]
 python-telegram-bot[rate-limiter]
+python-telegram-bot[webhooks]
