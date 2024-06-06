@@ -6,4 +6,4 @@ __logging.basicConfig(
 )
 
 __logging.getLogger("httpx").setLevel(WARNING)
-log = __logging.getLogger(__name__)
+logger = __logging.getLogger(__name__)
