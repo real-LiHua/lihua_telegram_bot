@@ -2,10 +2,14 @@
 import os
 import subprocess
 from secrets import token_urlsafe
-
 from telegram import ForceReply, Update
-from telegram.ext import (AIORateLimiter, Application, CommandHandler,
-                          ContextTypes, MessageHandler)
+from telegram.ext import (
+    AIORateLimiter,
+    Application,
+    CommandHandler,
+    ContextTypes,
+    MessageHandler,
+)
 from telegram.ext.filters import COMMAND, TEXT
 
 from lihua_telegram_bot.config import Config
@@ -15,7 +19,6 @@ from lihua_telegram_bot.log import logger
 
 async def init(app: Application) -> None:
     await app.bot.set_my_short_description("已连接 | Connected")
-    # await app.bot.send_document(2023814798, "Hello Kitty")
 
 
 async def stop(app: Application) -> None:
@@ -30,28 +33,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     os.environ["USER"] = __name__
-    subprocess.run(
-        (
-            "fastfetch",
-            "--logo", "small",
-            "--logo-separate", "true",
-            "--pipe", "true",
-            "--disk-show-regular", "true",
-            "--disk-show-external", "true",
-            "--disk-show-hidden", "true",
-            "--disk-show-subvolumes", "true",
-            "--disk-show-readonly", "true",
-            "--disk-show-unknown", "true",
-            "--physicaldisk-temp", "true",
-            "--display-precise-refresh-rate", "true",
-            "--cpu-temp", "true",
-            "--cpuusage-separate", "true",
-            "--gpu-temp", "true",
-            "--gpu-driver-specific", "true",
-            "--battery-temp", "true",
-            "--wm-detect-plugin", "true",
-        )
-    )
+    await update.message.reply_text(subprocess.run(("fastfetch", "-c", os.path.join(os.path.dirname(__file__), "config.jsonc")), capture_output=True).stdout.decode())
 
 
 def main(args) -> None:
@@ -77,8 +59,8 @@ def main(args) -> None:
             port=config.LPOST,
             secret_token=token_urlsafe(128),
             webhook_url=f"https://{config.RHOST}:{config.RPOST}",
-            key=config.SSL and os.path.join(tmp, "private.key"),
-            cert=config.SSL and os.path.join(tmp, "cert.pem"),
+            key=config.WEBHOOK and os.path.join(tmp, "private.key"),
+            cert=config.WEBHOOK and os.path.join(tmp, "cert.pem"),
         )
     else:
         application.run_polling(allowed_updates=Update.ALL_TYPES)

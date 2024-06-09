@@ -1,7 +1,7 @@
 from lihua_telegram_bot.config import Config
 
 config = Config()
-if not config.SSL:
+if not config.WEBHOOK:
     raise
 import datetime
 import os.path
