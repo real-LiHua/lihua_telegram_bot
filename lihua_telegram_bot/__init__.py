@@ -33,7 +33,16 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     os.environ["USER"] = __name__
-    await update.message.reply_text(subprocess.run(("fastfetch", "-c", os.path.join(os.path.dirname(__file__), "config.jsonc")), capture_output=True).stdout.decode())
+    await update.message.reply_text(
+        subprocess.run(
+            (
+                "fastfetch",
+                "-c",
+                os.path.join(os.path.dirname(__file__), "config.jsonc"),
+            ),
+            capture_output=True,
+        ).stdout.decode()
+    )
 
 
 def main(args) -> None:
