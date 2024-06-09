@@ -18,7 +18,7 @@ except OSError:
 
 
 class Config:
-    SSL = _os.getenv("lihua_tgbot_ssl")
+    WEBHOOK = _os.getenv("lihua_tgbot_ssl", "1")
     TOKEN = _os.getenv("lihua_tgbot_token")
     RHOST = _os.getenv("lihua_tgbot_rhost", IPv4)
     RPOST = _os.getenv("lihua_tgbot_rpost", "8443")
@@ -50,7 +50,7 @@ class Config:
         if "DEFAULT" not in config:
             return
         config = config["DEFAULT"]
-        self.SSL = config.getboolean("ssl", self.SSL)
+        self.WEBHOOK = config.getboolean("WEBHOOK", self.WEBOOK)
         self.TOKEN = config.get("token", self.TOKEN)
         self.RHOST = config.get("rhost", self.RHOST)
         self.RPOST = config.get("rpost", self.RPOST)

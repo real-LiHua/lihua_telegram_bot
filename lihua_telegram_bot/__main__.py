@@ -6,6 +6,10 @@ from lihua_telegram_bot.i18n import _
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-c", "--config", help=_("config file"))
-parser.add_argument("-l", "--log-level", choices=["NOTSET","DEBUG","INFO","WARNING","ERROR","CRITICAL"], help=_("log level"))
-args = parser.parse_args()
-sys.exit(main(args))
+parser.add_argument(
+    "-l",
+    "--log-level",
+    choices=["NOTSET", "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+    help=_("log level"),
+)
+sys.exit(main(parser.parse_args()))
