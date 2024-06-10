@@ -50,7 +50,7 @@ class Config:
         if "DEFAULT" not in config:
             return
         config = config["DEFAULT"]
-        self.WEBHOOK = config.getboolean("webhook", self.WEBHOOK)
+        self.WEBHOOK = config.get("webhook", self.WEBHOOK)
         self.TOKEN = config.get("token", self.TOKEN)
         self.RHOST = config.get("rhost", self.RHOST)
         self.RPOST = config.get("rpost", self.RPOST)
