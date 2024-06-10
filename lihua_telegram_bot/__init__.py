@@ -62,14 +62,14 @@ def main(args) -> None:
         from lihua_telegram_bot.mkcrt import tmp
     except RuntimeError:
         pass
-    if config.WEBHOOK:
+    if int(config.WEBHOOK):
         application.run_webhook(
             listen=config.LHOST,
             port=config.LPOST,
             secret_token=token_urlsafe(128),
             webhook_url=f"https://{config.RHOST}:{config.RPOST}",
-            key=config.WEBHOOK and os.path.join(tmp, "private.key"),
-            cert=config.WEBHOOK and os.path.join(tmp, "cert.pem"),
+            key=os.path.join(tmp, "private.key"),
+            cert=os.path.join(tmp, "cert.pem"),
         )
     else:
         application.run_polling(allowed_updates=Update.ALL_TYPES)
