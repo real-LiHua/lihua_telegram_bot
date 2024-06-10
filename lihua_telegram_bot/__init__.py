@@ -58,11 +58,11 @@ def main(args) -> None:
     )
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("systeminfo", system_info))
-    try:
-        from lihua_telegram_bot.mkcrt import tmp
-    except RuntimeError:
-        pass
     if int(config.WEBHOOK):
+        try:
+            from lihua_telegram_bot.mkcrt import tmp
+        except RuntimeError:
+            pass
         application.run_webhook(
             listen=config.LHOST,
             port=config.LPOST,
