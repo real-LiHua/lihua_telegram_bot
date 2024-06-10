@@ -58,7 +58,7 @@ def main(args) -> None:
     )
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("systeminfo", system_info))
-    if not int(config.WEBHOOK):
+    if int(config.WEBHOOK) and not __debug__:
         try:
             from lihua_telegram_bot.mkcrt import tmp
         except RuntimeError:
