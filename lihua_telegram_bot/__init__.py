@@ -58,7 +58,7 @@ async def lmstfy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not text and msg.reply_to_message:
         text = (msg.quote or msg.reply_to_message).text
     v = b64encode(text.encode()).decode().rstrip("=")
-    await (msg.quote or msg.reply_to_message or msg).reply_text(
+    await (msg.reply_to_message or msg).reply_text(
         f"https://lmstfy.net/?q={v}"
     )
 
