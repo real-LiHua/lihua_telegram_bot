@@ -16,11 +16,13 @@ from lihua_telegram_bot.log import logger
 
 async def init(app: Application) -> None:
     await app.bot.set_my_short_description("已连接 | Connected")
-    await app.bot.set_my_commands([
-        ("start", _("开始")),
-        ("systeminfo", _("系统信息")),
-        ("lmstfy", _("让我帮你搜索一下"))
-    ])
+    await app.bot.set_my_commands(
+        [
+            ("start", _("开始")),
+            ("systeminfo", _("系统信息")),
+            ("lmstfy", _("让我帮你搜索一下")),
+        ]
+    )
 
 
 async def stop(app: Application) -> None:
@@ -52,7 +54,7 @@ async def lmstfy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # pylint: disable= W0613
     msg = update.message
     text = msg.text.encode()
-    text = text[text.find(" ")+1:].strip()
+    text = text[text.find(" ") + 1 :].strip()
     if not text and msg.reply_to_message:
         text = msg.reply_to_message.chat.text
     v = b64encode(text).decode().rstrip("=")
