@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import os
 import subprocess
+from base64 import b64encode
 from secrets import token_urlsafe
+
 from telegram import ForceReply, Update
 from telegram.ext import (
     AIORateLimiter,
@@ -27,12 +29,10 @@ async def stop(app: Application) -> None:
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # pylint: disable=W0613
-    user = update.effective_user
-    await update.message.reply_html(_("Hello Kitty").format(user.mention_html()))
+    await update.message.reply_html(_("Hello Kitty"))
 
 
 async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    os.environ["USER"] = __name__
     await update.message.reply_text(
         subprocess.run(
             (
@@ -43,6 +43,12 @@ async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
             capture_output=True,
         ).stdout.decode()
     )
+
+
+async def lmstfy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    msg = update.message
+    v = b64encode(msg.text.encode()[8:].strip()).decode().rstrip("=")
+    await (msg.reply_to_message or msg).reply_text(f"https://lmstfy.net/?q={v}")
 
 
 def main(args) -> None:
@@ -58,6 +64,7 @@ def main(args) -> None:
     )
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("systeminfo", system_info))
+    application.add_handler(CommandHandler("lmstfy", lmstfy))
     if int(config.WEBHOOK) and not __debug__:
         try:
             from lihua_telegram_bot.mkcrt import tmp
