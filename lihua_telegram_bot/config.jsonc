@@ -41,10 +41,7 @@
     {
       "type": "disk",
       "showExternal": true,
-      "showHidden": true,
       "showSubvolumes": true,
-      "showReadOnly": true,
-      "showUnknown": true
     },
     "localip",
     {
