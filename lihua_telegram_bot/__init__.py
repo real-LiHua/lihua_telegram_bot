@@ -53,11 +53,11 @@ async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
 async def lmstfy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # pylint: disable= W0613
     msg = update.message
-    text = msg.text.encode()
-    text = text[text.find(" ") + 1 :].strip()
+    text = msg.text
+    text = text[text.find(" "):].strip()[1:]
     if not text and msg.reply_to_message:
         text = msg.reply_to_message.chat.text
-    v = b64encode(text).decode().rstrip("=")
+    v = b64encode(text.encode()).decode().rstrip("=")
     await (msg.reply_to_message or msg).reply_text(f"https://lmstfy.net/?q={v}")
 
 
