@@ -3,6 +3,7 @@ import socket as __socket
 from configparser import ConfigParser
 from platform import system as _system
 
+# pylint: disable=C0103
 __v4 = __socket.socket(__socket.AF_INET, __socket.SOCK_DGRAM)
 __v6 = __socket.socket(__socket.AF_INET6, __socket.SOCK_DGRAM)
 try:
@@ -18,6 +19,7 @@ except OSError:
 
 
 class Config:
+    # pylint: disable=C0115,R0903
     WEBHOOK = _os.getenv("lihua_tgbot_ssl", "1")
     TOKEN = _os.getenv("lihua_tgbot_token")
     RHOST = _os.getenv("lihua_tgbot_rhost", IPv4)
@@ -35,6 +37,7 @@ class Config:
         if not path:
             if _system() != "Linux":
                 return
+            # pylint: disable=R1704
             for path in (
                 "config.ini",
                 "~/lihua_telegram_bot.ini",

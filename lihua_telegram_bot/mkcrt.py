@@ -1,7 +1,9 @@
+# pylint: disable=C0411,C0413
 from lihua_telegram_bot.config import Config
 
 config = Config()
 if not config.WEBHOOK:
+    # pylint: disable=E0704
     raise
 import datetime
 import os.path
@@ -12,6 +14,7 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.x509.oid import NameOID
 
+# pylint: disable=C0412
 from lihua_telegram_bot.log import logger
 
 logger.debug("正在创建临时目录")
