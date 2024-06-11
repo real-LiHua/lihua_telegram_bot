@@ -16,10 +16,16 @@ from lihua_telegram_bot.log import logger
 
 async def init(app: Application) -> None:
     await app.bot.set_my_short_description("已连接 | Connected")
+    await app.bot.set_my_commands([
+        ("start", _("开始")),
+        ("systeminfo", _("系统信息")),
+        ("lmstfy", _("让我帮你搜索一下"))
+    ])
 
 
 async def stop(app: Application) -> None:
-    await app.bot.set_my_short_description("已断开 | Disconnted")
+    await app.bot.set_my_commands([])
+    await app.bot.set_my_short_description("已断开 | Disconnected")
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:

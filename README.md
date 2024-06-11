@@ -5,9 +5,5 @@
 
 
 ```bash
-openssl req -newkey rsa:2048 -sha256 -noenc -x509 -days 3650 \
-            -keyout lihua_telegram_bot/private.key \
-            -out lihua_telegram_bot/cert.pem \
-            -subj "/CN=$(python -c 'import lihua_telegram_bot.config;print(lihua_telegram_bot.config.IP)')"
-python -m lihua_telegram_bot
+python -m lihua_telegram_bot -l INFO
 ```
