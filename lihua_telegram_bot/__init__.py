@@ -52,7 +52,7 @@ async def lmstfy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # pylint: disable= W0613
     msg = update.message
     text = msg.text.encode()
-    text = text[text.find(" "):].strip()
+    text = text[text.find(" ")+1:].strip()
     if not text and msg.reply_to_message:
         text = msg.reply_to_message.chat.text
     v = b64encode(text).decode().rstrip("=")
