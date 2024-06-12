@@ -24,8 +24,8 @@ async def init(app: Application) -> None:
     await app.bot.set_my_commands(
         [
             ("start", _("开始")),
-            ("systeminfo", _("系统信息")),
             ("lmstfy", _("让我帮你搜索一下")),
+            ("systeminfo", _("系统信息")),
         ]
     )
 
@@ -77,9 +77,9 @@ def main(args) -> None:
         .post_stop(stop)
         .build()
     )
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("systeminfo", system_info))
     application.add_handler(CommandHandler("lmstfy", lmstfy))
+    application.add_handler(CommandHandler("systeminfo", system_info))
+    application.add_handler(CommandHandler("start", start))
     if int(config.WEBHOOK) and not __debug__:
         try:
             # pylint:disable=C0415
