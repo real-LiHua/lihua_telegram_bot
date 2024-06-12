@@ -5,8 +5,13 @@ from base64 import b64encode
 from secrets import token_urlsafe
 
 from telegram import ForceReply, Update
-from telegram.ext import (AIORateLimiter, Application, CommandHandler,
-                          ContextTypes, MessageHandler)
+from telegram.ext import (
+    AIORateLimiter,
+    Application,
+    CommandHandler,
+    ContextTypes,
+    MessageHandler,
+)
 from telegram.ext.filters import COMMAND, TEXT
 
 from lihua_telegram_bot.config import Config
@@ -54,13 +59,11 @@ async def lmstfy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # pylint: disable= W0613
     msg = update.message
     text = msg.text
-    text = text[text.find(" ") :].strip()[1:]
+    text = text[text.find(" ") :][1:].strip()
     if not text and msg.reply_to_message:
         text = (msg.quote or msg.reply_to_message).text
     v = b64encode(text.encode()).decode().rstrip("=")
-    await (msg.reply_to_message or msg).reply_text(
-        f"https://lmstfy.net/?q={v}"
-    )
+    await (msg.reply_to_message or msg).reply_text(f"https://lmstfy.net/?q={v}")
 
 
 def main(args) -> None:
