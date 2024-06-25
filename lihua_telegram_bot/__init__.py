@@ -2,8 +2,8 @@
 import os
 import subprocess
 from base64 import b64encode
-from secrets import token_urlsafe
 from hashlib import md5
+from secrets import token_urlsafe
 
 from telegram import ForceReply, Update
 from telegram.ext import (
@@ -27,6 +27,8 @@ async def init(app: Application) -> None:
             ("start", _("开始")),
             ("lmstfy", _("让我帮你搜索一下")),
             ("id", _("获取ID")),
+            ("encrypt", _("加密")),
+            ("decrypt", _("解密")),
             ("apatch", _("获取apatch群组密码")),
             ("kernelsu", _("获取kernelsu群组密码")),
             ("systeminfo", _("系统信息")),
@@ -61,14 +63,21 @@ async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
 
 async def get_id(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     msg = update.message.reply_to_message or update.message
-    uid = msg.from_user.id
-    gid = msg.chat.id
-    mid = msg.message_id
-    text = f"用户ID: {uid}\n"
-    if uid != gid:
-        text += f"群组ID: {gid}\n"
-    text += f"消息ID: {mid}\n"
-    await update.message.reply_text(text)
+    uid = f"<code>{msg.from_user.id}</code>"
+    gid = f"<code>{msg.chat.id}</code>"
+    args = update.message.text.split()
+    if len(args) > 1:
+        if args[1] == "-u":
+            reply = uid
+        elif args[1] == "-g":
+            reply = gid
+    else:
+        reply = (f"uid={uid}({{}}) gid={gid}({{}})").format(
+            msg.from_user.mention_html(),
+            (msg.chat if msg.chat.title else msg.from_user).mention_html(),
+        )
+    await update.message.reply_html(reply)
+
 
 async def lmstfy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # pylint: disable= W0613
@@ -82,12 +91,14 @@ async def lmstfy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def apatch(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    user_id=update.message.from_user.id
-    sign = md5(f'{user_id}apatch'.encode('utf-8')).hexdigest()
+    user_id = update.message.from_user.id
+    sign = md5(f"{user_id}apatch".encode("utf-8")).hexdigest()
     await update.message.reply_text(sign)
+
 
 async def kernelsu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text("没写")
+
 
 def main(args) -> None:
     logger.setLevel(args.log_level)
