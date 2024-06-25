@@ -74,7 +74,7 @@ async def get_id(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     else:
         reply = (f"uid={uid}({{}}) gid={gid}({{}})").format(
             msg.from_user.mention_html(),
-            (msg.chat if msg.chat.title else msg.from_user).mention_html(),
+            f"<code>{msg.chat.title}</code>" if msg.chat.title else msg.from_user.mention_html(),
         )
     await update.message.reply_html(reply)
 
