@@ -3,6 +3,7 @@ import os
 import subprocess
 from base64 import b64encode
 from secrets import token_urlsafe
+from hashlib import md5
 
 from telegram import ForceReply, Update
 from telegram.ext import (
@@ -25,6 +26,9 @@ async def init(app: Application) -> None:
         [
             ("start", _("开始")),
             ("lmstfy", _("让我帮你搜索一下")),
+            ("id", _("获取ID")),
+            ("apatch", _("获取apatch群组密码")),
+            ("kernelsu", _("获取kernelsu群组密码")),
             ("systeminfo", _("系统信息")),
         ]
     )
@@ -55,6 +59,17 @@ async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     )
 
 
+async def get_id(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    msg = update.message.reply_to_message or update.message
+    uid = msg.from_user.id
+    gid = msg.chat.id
+    mid = msg.message_id
+    text = f"用户ID: {uid}\n"
+    if uid != gid:
+        text += f"群组ID: {gid}\n"
+    text += f"消息ID: {mid}\n"
+    await update.message.reply_text(text)
+
 async def lmstfy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # pylint: disable= W0613
     msg = update.message
@@ -65,6 +80,14 @@ async def lmstfy(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     v = b64encode(text.encode()).decode().rstrip("=")
     await (msg.reply_to_message or msg).reply_text(f"https://lmstfy.net/?q={v}")
 
+
+async def apatch(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user_id=update.message.from_user.id
+    sign = md5(f'{user_id}apatch'.encode('utf-8')).hexdigest()
+    await update.message.reply_text(sign)
+
+async def kernelsu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.reply_text("没写")
 
 def main(args) -> None:
     logger.setLevel(args.log_level)
@@ -78,8 +101,12 @@ def main(args) -> None:
         .build()
     )
     application.add_handler(CommandHandler("lmstfy", lmstfy))
+    application.add_handler(CommandHandler("id", get_id))
+    application.add_handler(CommandHandler("apatch", apatch))
+    application.add_handler(CommandHandler("kernelsu", kernelsu))
     application.add_handler(CommandHandler("systeminfo", system_info))
     application.add_handler(CommandHandler("start", start))
+
     if int(config.WEBHOOK) and not __debug__:
         try:
             # pylint:disable=C0415

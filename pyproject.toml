@@ -6,9 +6,10 @@ authors = ["Li Hua <lihua@email.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">3.8"
+python = ">=3.8,<4.0"
 python-telegram-bot = {extras = ["job-queue", "rate-limiter", "webhooks"], version = "^21.2"}
 cryptography = "^42.0.7"
+xxtea = "^3.2.0"
 
 [tool.isort]
 #profile = "hug"
