@@ -97,7 +97,21 @@ async def apatch(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def kernelsu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_text("没写")
+    text = update.message.text.split()
+    if len(text) != 2:
+        return
+    await update.message.reply_text(
+        subprocess.run(
+            (
+                "node",
+                os.path.join(os.path.dirname(__file__), "index.js"),
+                text[1],
+                "114514",
+            ),
+            capture_output=True,
+            check=True,
+        ).stdout.decode()
+    )
 
 
 def main(args) -> None:
