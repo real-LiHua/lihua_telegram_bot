@@ -57,6 +57,7 @@ async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
             ),
             check=True,
             cwd=os.path.dirname(__file__),
+            stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
         ).stdout.decode()
     )
@@ -109,6 +110,7 @@ async def kernelsu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         subprocess.run(
             ("node", "xxtea.js", text[1], "114514"),
             cwd=os.path.dirname(__file__),
+            stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
         ).stdout.decode()
     )
