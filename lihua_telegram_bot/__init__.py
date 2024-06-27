@@ -53,10 +53,11 @@ async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
             (
                 "fastfetch",
                 "-c",
-                os.path.join(os.path.dirname(__file__), "config.jsonc"),
+                "config.jsonc",
             ),
             capture_output=True,
             check=True,
+            cwd=os.path.dirname(__file__),
         ).stdout.decode()
     )
 
@@ -101,15 +102,9 @@ async def kernelsu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if len(text) != 2:
         return
     await update.message.reply_text(
-        subprocess.run(
-            (
-                "node",
-                os.path.join(os.path.dirname(__file__), "xxtea.js"),
-                text[1],
-                "114514",
-            ),
+        subprocess.run(("node","xxtea.js", text[1], "114514"),
             capture_output=True,
-            check=True,
+            cwd=os.path.dirname(__file__),
         ).stdout.decode()
     )
 
