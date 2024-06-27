@@ -55,7 +55,6 @@ async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
                 "-c",
                 "config.jsonc",
             ),
-            capture_output=True,
             check=True,
             cwd=os.path.dirname(__file__),
             stderr=subprocess.STDOUT,
@@ -109,7 +108,6 @@ async def kernelsu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(
         subprocess.run(
             ("node", "xxtea.js", text[1], "114514"),
-            capture_output=True,
             cwd=os.path.dirname(__file__),
             stderr=subprocess.STDOUT,
         ).stdout.decode()
