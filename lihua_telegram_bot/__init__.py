@@ -104,7 +104,7 @@ async def kernelsu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         subprocess.run(
             (
                 "node",
-                os.path.join(os.path.dirname(__file__), "index.js"),
+                os.path.join(os.path.dirname(__file__), "xxtea.js"),
                 text[1],
                 "114514",
             ),
