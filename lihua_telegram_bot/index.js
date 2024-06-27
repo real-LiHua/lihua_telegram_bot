@@ -1,1 +1,1 @@
-console.log(Tea.decrypt(...process.argv.slice(2,4)));
+console.log(decrypt(...process.argv.slice(2,4)));
