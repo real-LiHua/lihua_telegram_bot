@@ -134,7 +134,7 @@ def main(args) -> None:
     application.add_handler(CommandHandler("systeminfo", system_info))
     application.add_handler(CommandHandler("start", start))
 
-    if int(config.WEBHOOK) and not __debug__:
+    if int(config.WEBHOOK) and __debug__:
         try:
             # pylint:disable=C0415
             from lihua_telegram_bot.mkcrt import tmp
