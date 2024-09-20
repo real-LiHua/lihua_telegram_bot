@@ -15,4 +15,3 @@ jobs:
       - uses: axel-op/googlejavaformat-action@v3
         with:
           args: "--replace"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
