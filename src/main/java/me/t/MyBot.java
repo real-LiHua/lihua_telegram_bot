@@ -12,6 +12,13 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
 
 public class MyBot implements LongPollingSingleThreadUpdateConsumer {
   private final TelegramClient telegramClient;
+   private  String first_name;
+     private  String last_name;
+    private   String username;
+   private    long user_id;
+   private    String message_text;
+  private     long chat_id;
+    private   String answer;
 
   public MyBot(String botToken) {
     telegramClient = new OkHttpTelegramClient(botToken);
@@ -20,16 +27,16 @@ public class MyBot implements LongPollingSingleThreadUpdateConsumer {
   @Override
   public void consume(Update update) {
     if (update.hasMessage() && update.getMessage().hasText()) {
-      String user_first_name = update.getMessage().getChat().getFirstName();
-      String user_last_name = update.getMessage().getChat().getLastName();
-      String user_username = update.getMessage().getChat().getUserName();
-      long user_id = update.getMessage().getChat().getId();
-      String message_text = update.getMessage().getText();
-      long chat_id = update.getMessage().getChatId();
-      String answer = message_text;
+      this.first_name = update.getMessage().getChat().getFirstName();
+      this.last_name = update.getMessage().getChat().getLastName();
+      this.username = update.getMessage().getChat().getUserName();
+      this.user_id = update.getMessage().getChat().getId();
+      this.message_text = update.getMessage().getText();
+      this.chat_id = update.getMessage().getChatId();
+      this.answer = message_text;
 
-      SendMessage message = SendMessage.builder().chatId(chat_id).text(message_text).build();
-      log(user_first_name, user_last_name, Long.toString(user_id), message_text, answer);
+      SendMessage message = SendMessage.builder().chatId(this.chat_id).text(this.message_text).build();
+      log();
       try {
         telegramClient.execute(message);
       } catch (TelegramApiException e) {
@@ -38,15 +45,14 @@ public class MyBot implements LongPollingSingleThreadUpdateConsumer {
     }
   }
 
-  private void log(
-      String first_name, String last_name, String user_id, String txt, String bot_answer) {
+  private void log() {
     System.out.println("\n ----------------------------");
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     Date date = new Date();
     System.out.println(dateFormat.format(date));
     System.out.println(
-        String.format("Message from %s %s. (id = %s)", first_name, last_name, user_id));
-    System.out.println(String.format(" Text - %s", txt));
-    System.out.println("Bot answer: \n Text - " + bot_answer);
+        String.format("Message from %s %s. (id = %s)", this.first_name, this.last_name, this.user_id));
+    System.out.println(String.format(" Text - %s", this.message_text));
+    System.out.println("Bot answer: \n Text - " + this.answer);
   }
 }
