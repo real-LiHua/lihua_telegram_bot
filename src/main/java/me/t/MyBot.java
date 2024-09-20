@@ -12,13 +12,13 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
 
 public class MyBot implements LongPollingSingleThreadUpdateConsumer {
   private final TelegramClient telegramClient;
-   private  String first_name;
-     private  String last_name;
-    private   String username;
-   private    long user_id;
-   private    String message_text;
-  private     long chat_id;
-    private   String answer;
+  private String first_name;
+  private String last_name;
+  private String username;
+  private long user_id;
+  private String message_text;
+  private long chat_id;
+  private String answer;
 
   public MyBot(String botToken) {
     telegramClient = new OkHttpTelegramClient(botToken);
@@ -35,7 +35,8 @@ public class MyBot implements LongPollingSingleThreadUpdateConsumer {
       this.chat_id = update.getMessage().getChatId();
       this.answer = message_text;
 
-      SendMessage message = SendMessage.builder().chatId(this.chat_id).text(this.message_text).build();
+      SendMessage message =
+          SendMessage.builder().chatId(this.chat_id).text(this.message_text).build();
       log();
       try {
         telegramClient.execute(message);
@@ -51,7 +52,8 @@ public class MyBot implements LongPollingSingleThreadUpdateConsumer {
     Date date = new Date();
     System.out.println(dateFormat.format(date));
     System.out.println(
-        String.format("Message from %s %s. (id = %s)", this.first_name, this.last_name, this.user_id));
+        String.format(
+            "Message from %s %s. (id = %s)", this.first_name, this.last_name, this.user_id));
     System.out.println(String.format(" Text - %s", this.message_text));
     System.out.println("Bot answer: \n Text - " + this.answer);
   }
