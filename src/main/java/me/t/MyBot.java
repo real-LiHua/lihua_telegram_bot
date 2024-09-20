@@ -1,5 +1,8 @@
 package me.t;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
 import org.telegram.telegrambots.longpolling.util.LongPollingSingleThreadUpdateConsumer;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -17,10 +20,16 @@ public class MyBot implements LongPollingSingleThreadUpdateConsumer {
   @Override
   public void consume(Update update) {
     if (update.hasMessage() && update.getMessage().hasText()) {
+	String user_first_name = update.getMessage().getChat().getFirstName();
+        String user_last_name = update.getMessage().getChat().getLastName();
+        String user_username = update.getMessage().getChat().getUserName();
+        long user_id = update.getMessage().getChat().getId();
       String message_text = update.getMessage().getText();
       long chat_id = update.getMessage().getChatId();
+	    String answer = message_text;
 
       SendMessage message = SendMessage.builder().chatId(chat_id).text(message_text).build();
+	    log(user_first_name, user_last_name, Long.toString(user_id), message_text, answer);
       try {
         telegramClient.execute(message);
       } catch (TelegramApiException e) {
@@ -28,4 +37,12 @@ public class MyBot implements LongPollingSingleThreadUpdateConsumer {
       }
     }
   }
+    private void log(String first_name, String last_name, String user_id, String txt, String bot_answer) {
+        System.out.println("\n ----------------------------");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        System.out.println(dateFormat.format(date));
+        System.out.println("Message from " + first_name + " " + last_name + ". (id = " + user_id + ") \n Text - " + txt);
+        System.out.println("Bot answer: \n Text - " + bot_answer);
+    }
 }
