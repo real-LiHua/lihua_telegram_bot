@@ -8,30 +8,31 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 
 public class MyBot implements LongPollingSingleThreadUpdateConsumer {
-    private final TelegramClient telegramClient;
+  private final TelegramClient telegramClient;
 
-    public MyBot(String botToken) {
-        telegramClient = new OkHttpTelegramClient(botToken);
+  public MyBot(String botToken) {
+    telegramClient = new OkHttpTelegramClient(botToken);
+  }
+
+  @Override
+  public void consume(Update update) {
+    // We check if the update has a message and the message has text
+    if (update.hasMessage() && update.getMessage().hasText()) {
+      // Set variables
+      String message_text = update.getMessage().getText();
+      long chat_id = update.getMessage().getChatId();
+
+      SendMessage message =
+          SendMessage // Create a message object
+              .builder()
+              .chatId(chat_id)
+              .text(message_text)
+              .build();
+      try {
+        telegramClient.execute(message); // Sending our message object to user
+      } catch (TelegramApiException e) {
+        e.printStackTrace();
+      }
     }
-
-    @Override
-    public void consume(Update update) {
-        // We check if the update has a message and the message has text
-        if (update.hasMessage() && update.getMessage().hasText()) {
-            // Set variables
-            String message_text = update.getMessage().getText();
-            long chat_id = update.getMessage().getChatId();
-
-            SendMessage message = SendMessage // Create a message object
-                    .builder()
-                    .chatId(chat_id)
-                    .text(message_text)
-                    .build();
-            try {
-                telegramClient.execute(message); // Sending our message object to user
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+  }
 }
