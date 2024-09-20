@@ -7,7 +7,6 @@ public class realLiHua {
 	String botToken = args[0];
 	try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
 	    botsApplication.registerBot(botToken, new MyBot(botToken));
-	    System.out.println("MyBot successfully started!");
 	    Thread.currentThread().join();
 	} catch (Exception e) {
 	    e.printStackTrace();
