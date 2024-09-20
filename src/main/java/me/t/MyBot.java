@@ -44,15 +44,8 @@ public class MyBot implements LongPollingSingleThreadUpdateConsumer {
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     Date date = new Date();
     System.out.println(dateFormat.format(date));
-    System.out.println(
-        "Message from "
-            + first_name
-            + " "
-            + last_name
-            + ". (id = "
-            + user_id
-            + ") \n Text - "
-            + txt);
+    System.out.println(String.format("Message from %s %s. (id = %s)", first_name, last_name, user_id));
+    System.out.println(String.format(" Text - %s", txt));
     System.out.println("Bot answer: \n Text - " + bot_answer);
   }
 }
