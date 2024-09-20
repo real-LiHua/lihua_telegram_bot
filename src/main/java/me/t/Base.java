@@ -5,9 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
 import org.telegram.telegrambots.longpolling.util.LongPollingSingleThreadUpdateConsumer;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 
 public class Base implements LongPollingSingleThreadUpdateConsumer {
@@ -32,9 +30,9 @@ public class Base implements LongPollingSingleThreadUpdateConsumer {
       this.username = update.getMessage().getChat().getUserName();
       this.user_id = update.getMessage().getChat().getId();
       this.chat_id = update.getMessage().getChatId();
-    if (update.getMessage().hasText()) {
-      this.message_text = update.getMessage().getText();
-	    }
+      if (update.getMessage().hasText()) {
+        this.message_text = update.getMessage().getText();
+      }
     }
   }
 
