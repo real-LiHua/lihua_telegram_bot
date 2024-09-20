@@ -20,12 +20,7 @@ public class MyBot implements LongPollingSingleThreadUpdateConsumer {
       String message_text = update.getMessage().getText();
       long chat_id = update.getMessage().getChatId();
 
-      SendMessage message =
-          SendMessage
-              .builder()
-              .chatId(chat_id)
-              .text(message_text)
-              .build();
+      SendMessage message = SendMessage.builder().chatId(chat_id).text(message_text).build();
       try {
         telegramClient.execute(message);
       } catch (TelegramApiException e) {
