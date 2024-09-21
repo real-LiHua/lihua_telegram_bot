@@ -3,13 +3,11 @@ package me.t;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.telegram.telegrambots.client.okhttp.OkHttpTelegramClient;
-import org.telegram.telegrambots.longpolling.util.LongPollingSingleThreadUpdateConsumer;
+import org.telegram.telegrambots.abilitybots.api.bot.AbilityBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 
-public class Base implements LongPollingSingleThreadUpdateConsumer {
-  protected final TelegramClient telegramClient;
+public class Base extends AbilityBot {
   protected String first_name;
   protected String last_name;
   protected String username;
@@ -18,8 +16,13 @@ public class Base implements LongPollingSingleThreadUpdateConsumer {
   protected String message_text;
   protected String answer;
 
-  public Base(String botToken) {
-    telegramClient = new OkHttpTelegramClient(botToken);
+  public Base(TelegramClient telegramClient, String botUsername) {
+    super(telegramClient, botUsername);
+  }
+
+  @Override
+  public long creatorId() {
+    return 777000;
   }
 
   @Override
