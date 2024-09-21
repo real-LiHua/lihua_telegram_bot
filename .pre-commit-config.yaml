@@ -5,6 +5,6 @@ repos:
   - id: pretty-format-java
     args: [--autofix]
   - id: pretty-format-kotlin
-    args: [--autofix]
+    args: [--autofix, --ktfmt]
   - id: pretty-format-yaml
     args: [--autofix, --indent, '2']
