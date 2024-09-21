@@ -1,8 +1,5 @@
 package me.t;
 
-// import java.text.DateFormat;
-// import java.text.SimpleDateFormat;
-// import java.util.Date;
 import org.telegram.telegrambots.longpolling.util.LongPollingSingleThreadUpdateConsumer;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
