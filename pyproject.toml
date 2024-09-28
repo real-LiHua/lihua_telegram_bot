@@ -1,0 +1,57 @@
+[tool.poetry]
+name = "lihua-telegram-bot"
+version = "0.1.0"
+description = ""
+authors = ["Li Hua <lihua@email.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-telegram-bot = "^21.6"
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.13.2"
+pylint = "^3.3.1"
+pytest = "^8.3.3"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "semver2"
+version_provider = "poetry"
+major_version_zero = true
+
+[tool.isort]
+src_paths = ["lihua_telegram_bot", "tests"]
+
+[tool.pylint.main]
+jobs = 0
+py-version = "3.12"
+recursive = true
+suggestion-mode = true
+
+[tool.pylint.basic]
+good-names = ["i", "j", "k", "ex", "Run", "_"]
+
+[tool.pylint.classes]
+check-protected-access-in-special-methods = true
+
+[tool.pylint.format]
+expected-line-ending-format = "LF"
+ignore-long-lines = "^\\s*(# )?<?https?://\\S+>?$"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
+
+[tool.pylint.logging]
+logging-format-style = "new"
+
+[tool.pylint."messages control"]
+disable = ["missing-module-docstring", "missing-function-docstring"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
