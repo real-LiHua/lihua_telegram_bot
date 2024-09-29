@@ -17,11 +17,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
             -1002325071906, str(user.id)
         )
 
-        if not context.chat_data.get(str(-1002325071906)):
-            context.chat_data[str(-1002325071906)] = {}
-        context.chat_data[str(-1002325071906)][str(topic.message_thread_id)] = user.id
-
-        context.user_data[str(user.id)] = topic.message_thread_id
+        context.user_data["-1002325071906"] = topic.message_thread_id
 
         msg: Message = await context.bot.send_message(
             -1002325071906,
@@ -33,11 +29,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.effective_chat.type != Chat.PRIVATE:
-        return
     await update.effective_message.copy(
         -1002325071906,
-        message_thread_id=context.user_data.get(str(update.effective_user.id)),
+        message_thread_id=context.user_data["-1002325071906"],
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -52,3 +46,10 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             ]
         ),
     )
+
+
+async def delete(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+    _, uid, mid = query.data.split("_")
+    await context.bot.delete_message(uid, str(mid))
