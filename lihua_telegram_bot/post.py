@@ -10,5 +10,4 @@ async def stop(application: Application) -> None:
 
 
 async def shutdown(application: Application) -> None:
-    # await application.bot_data['database'].close()
     pass

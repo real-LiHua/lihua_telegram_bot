@@ -1,5 +1,6 @@
 import logging
 from argparse import ArgumentParser, Namespace
+from pathlib import Path
 
 from telegram.ext import (
     Application,
@@ -10,7 +11,7 @@ from telegram.ext import (
 
 from . import post, start
 
-parser: ArgumentParser = argparse.ArgumentParser("python -m lihua_telegram_bot")
+parser: ArgumentParser = ArgumentParser("python -m lihua_telegram_bot")
 parser.add_argument("-d", "--debug", action="store_true")
 parser.add_argument("-k", "--token")
 parser.add_argument("-p", "--proxy")
@@ -28,7 +29,7 @@ application: Application = (
     ApplicationBuilder()
     .token(args.token)
     .http_version("2")
-    .persistence(PicklePersistence(filepath="site/my", single_file=False))
+    .persistence(PicklePersistence(filepath=Path("site") / "bot", single_file=False))
     .post_init(post.init)
     .post_stop(post.stop)
     .post_shutdown(post.shutdown)
@@ -36,6 +37,5 @@ application: Application = (
     .build()
 )
 
-start_handler: CommandHandler = CommandHandler("start", start)
-application.add_handler(start_handler)
+application.add_handler(CommandHandler("start", start))
 application.run_polling()
