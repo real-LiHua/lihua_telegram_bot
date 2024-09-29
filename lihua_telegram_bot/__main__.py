@@ -2,14 +2,17 @@ import logging
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
 
+from telegram import Update
 from telegram.ext import (
     Application,
     ApplicationBuilder,
     CommandHandler,
+    MessageHandler,
     PicklePersistence,
 )
+from telegram.ext.filters import ALL
 
-from . import post, start
+from . import message, post, start
 
 parser: ArgumentParser = ArgumentParser("python -m lihua_telegram_bot")
 parser.add_argument("-d", "--debug", action="store_true")
@@ -38,4 +41,5 @@ application: Application = (
 )
 
 application.add_handler(CommandHandler("start", start))
-application.run_polling()
+application.add_handler(MessageHandler(ALL, message))
+application.run_polling(allowed_updates=Update.ALL_TYPES)
