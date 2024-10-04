@@ -13,7 +13,7 @@ from telegram.ext import (
 )
 from telegram.ext.filters import ChatType
 
-from . import delete, message, post, start
+from . import delete, post, reply, start, sync2chat
 
 parser: ArgumentParser = ArgumentParser("python -m lihua_telegram_bot")
 parser.add_argument("-d", "--debug", action="store_true")
@@ -43,5 +43,6 @@ application: Application = (
 
 application.add_handler(CommandHandler("start", start))
 application.add_handler(CallbackQueryHandler(delete))
-application.add_handler(MessageHandler(ChatType.PRIVATE, message))
+application.add_handler(MessageHandler(ChatType.SUPERGROUP, reply))
+application.add_handler(MessageHandler(ChatType.PRIVATE, sync2chat))
 application.run_polling(allowed_updates=Update.ALL_TYPES)
